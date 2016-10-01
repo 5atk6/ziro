@@ -36,33 +36,19 @@ get '/search/:place' do
   Ziro.all.each do |ziro|
     latitude = ziro.latitude
     longitude = ziro.longitude
-    place = latitude.to_s + "," + longitude.to_s
+    place = longitude.to_s + "," + latitude.to_s
     uri.query = URI.encode_www_form({
       appid: "dj0zaiZpPVFjOTVWRk15NHZjNCZzPWNvbnN1bWVyc2VjcmV0Jng9NDY-",
       coordinates: user_place + " " + place,
       output: "json"
     })
     res = Net::HTTP.get_response(uri)
-    returned_json = JSON.parse(res.body)
+    _distance = JSON.parse(res.body)["Feature"][0]["Geometry"]["Distance"]
+    ziro.update({
+      distance: _distance
+    })
   end
-  erb :index
-end
-
-
-get '/test' do
-  cross_origin
-  user_place = "139.701860,35.657846"
-  uri = URI("http://distance.search.olp.yahooapis.jp/OpenLocalPlatform/V1/distance")
-
-  place = "139.693770,35.655091"
-  uri.query = URI.encode_www_form({
-    appid: "dj0zaiZpPVFjOTVWRk15NHZjNCZzPWNvbnN1bWVyc2VjcmV0Jng9NDY-",
-    coordinates: user_place + " " + place,
-    output: "json"
-  })
-  res = Net::HTTP.get_response(uri)
-  distance = JSON.parse(res.body)["Feature"][0]["Geometry"]["Distance"]
   
-  # json returned_json
-  erb :index
+  Ziro.all.order("distance ASC").take(10).to_json
+  # erb :index
 end

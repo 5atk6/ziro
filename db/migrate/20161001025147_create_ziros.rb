@@ -4,6 +4,7 @@ class CreateZiros < ActiveRecord::Migration
       t.string :name
       t.float  :longitude
       t.float  :latitude
+      t.float :distance
       
       t.timestamps null: false
     end

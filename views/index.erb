@@ -1,7 +1,4 @@
-<%= @latitude %>
-<br>
-<%= @longitude %>
-<br>
-<%= @returned_json %>
-
-test
+<% @ziro.each do |ziro| %>
+  <%= ziro.name %> <br>
+  <%= ziro.distance %> <br>
+<% end %>
