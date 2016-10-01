@@ -33148,10 +33148,6 @@
 
 	var _FAB2 = _interopRequireDefault(_FAB);
 
-	var _AppBar = __webpack_require__(264);
-
-	var _AppBar2 = _interopRequireDefault(_AppBar);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33176,6 +33172,25 @@
 	            width: '100%'
 	        },
 	        marginBottom: '8rem'
+	    },
+	    header: {
+	        backgroundColor: "rgb(247, 226, 25)",
+	        width: '100%',
+	        height: '64px',
+	        marginBottom: '10px',
+	        boxShadow: '0px 3px 3px rgb(143, 143, 143)',
+	        lineHeight: '64px',
+	        paddingLeft: '5px'
+	    },
+	    headerText: {
+	        color: ' black',
+	        fontSize: '35px',
+	        fontWeight: '900',
+	        fontFamily: 'font-family: "Hiragino Kaku Gothic ProN","メイリオ", sans-serif'
+	    },
+	    headerTextInner: {
+	        color: 'rgb(203, 28, 28)',
+	        paddingRight: '5px'
 	    }
 	};
 
@@ -33240,10 +33255,20 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_AppBar2.default, {
-	                    title: 'Title',
-	                    iconClassNameRight: 'muidocs-icon-navigation-expand-more'
-	                }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { style: styles.header },
+	                    _react2.default.createElement(
+	                        'span',
+	                        { style: styles.headerText },
+	                        _react2.default.createElement(
+	                            'span',
+	                            { style: styles.headerTextInner },
+	                            '\u30E9\u30FC\u30E1\u30F3'
+	                        ),
+	                        '\u8FD1\u4E8C\u90CE'
+	                    )
+	                ),
 	                _react2.default.createElement(
 	                    'div',
 	                    { style: [styles.container] },
@@ -34084,30 +34109,29 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 
 	var getCurrentsend = function getCurrentsend(callback, _callback) {
-	  navigator.geolocation.getCurrentPosition(function (res) {
-	    var _res$coords = res.coords;
-	    var latitude = _res$coords.latitude;
-	    var longitude = _res$coords.longitude;
+	    navigator.geolocation.getCurrentPosition(function (res) {
+	        var _res$coords = res.coords;
+	        var latitude = _res$coords.latitude;
+	        var longitude = _res$coords.longitude;
 
-	    _callback({ latitude: latitude, longitude: longitude });
-	    var _url = 'https://kinjiro.herokuapp.com/search/' + longitude + ',' + latitude;
-	    fetch(_url, {
-	      headers: {
-	        'content-type': 'application/json'
-	      }
-	    }).then(function (response) {
-	      return response.json();
-	    }).then(function (res) {
-	      callback(res);
+	        _callback({ latitude: latitude, longitude: longitude });
+	        var _url = 'https://ziro-atk.c9users.io/search/' + longitude + ',' + latitude;
+	        var request = new XMLHttpRequest();
+	        request.open('GET', _url);
+	        request.setRequestHeader('content-type', 'application/json');
+	        request.onload = function () {
+	            var response = JSON.parse(request.responseText);
+	            callback(response);
+	        };
+	        request.send();
+	    }, function (err) {
+	        console.log(err);
 	    });
-	  }, function (err) {
-	    console.log(err);
-	  });
 	};
 
 	exports.default = getCurrentsend;
@@ -34172,6 +34196,9 @@
 	    width: '30%',
 	    display: 'flex',
 	    flexDirection: 'row-reverse'
+	  },
+	  fontStyle: {
+	    fontFamily: 'font-family: "Hiragino Kaku Gothic ProN","メイリオ", sans-serif'
 	  }
 	};
 
@@ -34213,7 +34240,7 @@
 	      var mobile = _props2.mobile;
 
 	      var imageStyle = {
-	        height: !mobile ? '170px' : '300px',
+	        height: mobile ? '170px' : '300px',
 	        backgroundRepeat: 'no-repeat',
 	        backgroundSize: 'cover',
 	        backgroundImage: 'url(' + imageurl + ')'
@@ -34227,7 +34254,10 @@
 	          _react2.default.createElement(
 	            _Card.CardMedia,
 	            {
-	              overlay: _react2.default.createElement(_Card.CardTitle, { title: this.props.name })
+	              overlay: _react2.default.createElement(_Card.CardTitle, {
+	                title: this.props.name,
+	                titleStyle: styles.fontStyle
+	              })
 	            },
 	            _react2.default.createElement('div', { style: imageStyle })
 	          ),
@@ -34242,7 +34272,7 @@
 	                { style: styles.distanceText },
 	                _react2.default.createElement(
 	                  'div',
-	                  null,
+	                  { style: styles.fontStyle },
 	                  '\u3053\u306E\u5E97\u8217\u307E\u3067\u306E\u8DDD\u96E2\uFF1A',
 	                  this.roundOff(this.props.distance),
 	                  'km'
@@ -34252,10 +34282,11 @@
 	                'div',
 	                { style: styles.buttonArea },
 	                _react2.default.createElement(_RaisedButton2.default, {
-	                  label: !mobile ? "Go" : "店舗へGO",
+	                  label: mobile ? "Go" : "店舗へGO",
 	                  onTouchTap: this._onPress,
-	                  backgroundColor: 'rgb(255, 230, 0)',
-	                  labelColor: 'black'
+	                  backgroundColor: 'rgb(247, 226, 25)',
+	                  labelColor: 'black',
+	                  labelStyle: styles.fontStyle
 	                })
 	              )
 	            )
@@ -39797,7 +39828,7 @@
 	      return _react2.default.createElement(
 	        _FloatingActionButton2.default,
 	        {
-	          backgroundColor: 'rgb(255, 230, 0)',
+	          backgroundColor: 'rgb(247, 226, 25)',
 	          style: {
 	            position: 'fixed',
 	            bottom: '5%',
