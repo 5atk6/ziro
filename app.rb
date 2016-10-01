@@ -25,9 +25,6 @@ options "*" do
   200
 end
 
-API_URL_PREFIX = "http://distance.search.olp.yahooapis.jp/OpenLocalPlatform/V1/distance?coordinates="
-API_ID = " &appid=dj0zaiZpPVFjOTVWRk15NHZjNCZzPWNvbnN1bWVyc2VjcmV0Jng9NDY-&output=json"
-
 get '/search/:place' do
   cross_origin
   user_place = params[:place]
@@ -49,6 +46,6 @@ get '/search/:place' do
     })
   end
   
-  Ziro.all.order("distance ASC").take(10).to_json
+  Ziro.all.order("distance ASC").take(38).to_json
   # erb :index
 end

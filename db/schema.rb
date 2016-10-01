@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20161001025147) do
     t.float    "longitude"
     t.float    "latitude"
     t.float    "distance"
+    t.string   "imageurl"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
