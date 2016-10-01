@@ -8,6 +8,8 @@ gem 'rake'
 gem 'sinatra-activerecord'
 gem 'bcrypt'
 
+gem "sinatra-cross_origin", "~> 0.3.1"
+
 group :development do
   gem 'sqlite3'
 end
