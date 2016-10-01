@@ -26,7 +26,7 @@ options "*" do
 end
 
 get '/' do
-  "aaa"
+  File.read('views/index.html')
   # erb :index
 end
 
