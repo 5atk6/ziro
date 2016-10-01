@@ -25,13 +25,16 @@ options "*" do
   200
 end
 
+get '/' do
+  "aaa"
+  # erb :index
+end
+
 get '/search/:place' do
   cross_origin
   user_place = params[:place]
   user_latitude = user_place.split(",")[1]
   user_longitude = user_place.split(",")[0]
-  # uri = URI("http://distance.search.olp.yahooapis.jp/OpenLocalPlatform/V1/distance")
-  # near_ziro = Array.new(38)
 
   Ziro.all.each do |ziro|
     latitude = ziro.latitude
@@ -40,16 +43,7 @@ get '/search/:place' do
     diff_longtitude =  user_longitude.to_f - longitude
     added_distance =  diff_latitude**2 + diff_longtitude**2
     
-    _distance = (Math.sqrt(added_distance)) * 111263.283
-    # near_ziro << {ziro.name, ziro.longitude, ziro.latitude, ziro.imageurl, _distance}
-    # place = longitude.to_s + "," + latitude.to_s
-    # uri.query = URI.encode_www_form({
-    #   appid: "dj0zaiZpPVFjOTVWRk15NHZjNCZzPWNvbnN1bWVyc2VjcmV0Jng9NDY-",
-    #   coordinates: user_place + " " + place,
-    #   output: "json"
-    # })
-    # res = Net::HTTP.get_response(uri)
-    # _distance = JSON.parse(res.body)["Feature"][0]["Geometry"]["Distance"]
+    _distance = (Math.sqrt(added_distance)) * 111.263283 # http://mononofu.hatenablog.com/entry/20090324/1237894846
     
     ziro.update({
       distance: _distance
